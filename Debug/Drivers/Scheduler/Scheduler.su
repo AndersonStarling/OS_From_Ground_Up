@@ -1,0 +1,5 @@
+../Drivers/Scheduler/Scheduler.c:48:13:Scheduler_Init_Task	24	static
+../Drivers/Scheduler/Scheduler.c:118:17:Scheduler_Get_Current_PSP	4	static
+../Drivers/Scheduler/Scheduler.c:123:13:Scheduler_Save_Current_PSP	16	static
+../Drivers/Scheduler/Scheduler.c:128:6:Scheduler_Start_OS	8	static,ignoring_inline_asm
+../Drivers/Scheduler/Scheduler.c:152:30:SysTick_Handler	0	static,ignoring_inline_asm
