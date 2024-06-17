@@ -6,22 +6,22 @@
 #define MAX_OS_TASK 3u
 #define LIST_OS_TASK {Task_1, Task_2, Task_3}
 
-#define XSPR_INDEX 16u
-#define PC_INDEX   15u
-#define LR_INDEX   14u
-#define R12_INDEX  13u
-#define R3_INDEX   12u
-#define R2_INDEX   11u
-#define R1_INDEX   10u
-#define R0_INDEX    9u
-#define R11_INDEX   8u
-#define R10_INDEX   7u
-#define R9_INDEX    6u
-#define R8_INDEX    5u
-#define R7_INDEX    4u
-#define R6_INDEX    3u
-#define R5_INDEX    2u
-#define R4_INDEX    1u
+#define XSPR_INDEX 15u
+#define PC_INDEX   14u
+#define LR_INDEX   13u
+#define R12_INDEX  12u
+#define R3_INDEX   11u
+#define R2_INDEX   10u
+#define R1_INDEX    9u
+#define R0_INDEX    8u
+#define R11_INDEX   7u
+#define R10_INDEX   6u
+#define R9_INDEX    5u
+#define R8_INDEX    4u
+#define R7_INDEX    3u
+#define R6_INDEX    2u
+#define R5_INDEX    1u
+#define R4_INDEX    0u
 
 #define STACK_SIZE 0x1000u
 
@@ -110,7 +110,7 @@ static void Scheduler_Init_Task(void * Task_Function_Ptr, uint32_t * Task_Stack_
 
     /* Store R4 */
     *(volatile uint32_t *)Task_Stack_Ptr = 0x04040404u;
-    Task_Stack_Ptr --;
+    // Task_Stack_Ptr --;
 
     Task_Stack_Ptr_Table[Task_Stack_Index] = (uint32_t)Task_Stack_Ptr;
 }

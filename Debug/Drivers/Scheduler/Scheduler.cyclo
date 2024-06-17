@@ -1,5 +1,0 @@
-../Drivers/Scheduler/Scheduler.c:48:13:Scheduler_Init_Task	1
-../Drivers/Scheduler/Scheduler.c:118:17:Scheduler_Get_Current_PSP	1
-../Drivers/Scheduler/Scheduler.c:123:13:Scheduler_Save_Current_PSP	1
-../Drivers/Scheduler/Scheduler.c:128:6:Scheduler_Start_OS	1
-../Drivers/Scheduler/Scheduler.c:152:30:SysTick_Handler	1
