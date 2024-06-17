@@ -17,31 +17,25 @@ volatile task_struct_t task_variable =
 
 void Task_1(void)
 {
-    task_variable.task_1 ++;
-
     for(;;)
     {
-
+        task_variable.task_1 ++;
     }
 }
 
 void Task_2(void)
 {
-    task_variable.task_2 ++;
-
     for(;;)
     {
-
+        task_variable.task_2 ++;
     }
 }
 
 void Task_3(void)
 {
-    task_variable.task_3 ++;
-
     for(;;)
     {
-
+        task_variable.task_3 ++;
     }
 }
 
