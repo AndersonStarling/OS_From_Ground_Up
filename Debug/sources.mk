@@ -38,10 +38,10 @@ CPP_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-Core/OS_Task \
 Core/Src \
 Core/Startup \
+Drivers/OS/OS_Task \
+Drivers/OS/Scheduler \
+Drivers/OS/System_Timer \
 Drivers/STM32F4xx_HAL_Driver/Src \
-Drivers/Scheduler \
-Drivers/System_Timer \
 
