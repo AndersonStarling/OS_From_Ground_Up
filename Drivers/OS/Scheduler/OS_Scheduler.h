@@ -20,6 +20,7 @@ typedef struct
 typedef struct
 {
     uint32_t Task_Running_Index;
+    OS_Task_Struct_t * OS_Task_Pointer;
 } OS_Scheduler_struct_t;
 
 

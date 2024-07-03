@@ -7,26 +7,24 @@
 /* Scheduler data */
 OS_Scheduler_struct_t Scheduler = 
 {
-    .Task_Running_Index = 0;
+    .Task_Running_Index = 0,
+    .OS_Task_Pointer = &OS_Task[0]
 };
 
 static uint32_t Scheduler_Get_Current_PSP(void)
 {
-    return Task_Stack_Ptr_Table[Task_Stack_Index];
+    return Scheduler.OS_Task_Pointer[Scheduler.Task_Running_Index]->Current_Stack_Pointer;
 }
 
 static void Scheduler_Save_Current_PSP(uint32_t Current_PSP)
 {
-    Task_Stack_Ptr_Table[Task_Stack_Index] = Current_PSP;
+    Scheduler.OS_Task_Pointer[Scheduler.Task_Running_Index]->Current_Stack_Pointer = Current_PSP;
 }
-
-/* TO DO: implement Scheduler_Init */
-void Scheduler_Init()
 
 void Scheduler_Start_OS(void)
 {
     /* Init OS task */
-    OS_Init_Multiple_Task(void);
+    OS_Init_Multiple_Task();
 
     /* Init and start system timer */
     System_Timer_Init();
@@ -42,15 +40,13 @@ void Scheduler_Start_OS(void)
     __asm volatile("MSR CONTROL, R0");
 
     /* Call first task */
-    ((void (*)())(((uint32_t *)(Task_Stack_Ptr_Table[0]))[PC_INDEX]))();
+    ((void (*)())(((uint32_t *)(Scheduler.OS_Task_Pointer[0]->Current_Stack_Pointer))[PC_INDEX]))();
 
 }
 
 __attribute__ ((naked)) void SysTick_Handler(void)
 {
     __asm volatile("PUSH {LR}");
-
-    Systick_Counter ++;
 
     /* Save PSP */
     __asm volatile("MRS R0, PSP");
@@ -59,8 +55,8 @@ __attribute__ ((naked)) void SysTick_Handler(void)
     /* Store PSP because R0 is input param */
     __asm volatile("bl Scheduler_Save_Current_PSP");
 
-    Task_Stack_Index ++;
-    Task_Stack_Index = Task_Stack_Index % MAX_OS_TASK;
+    Scheduler.Task_Running_Index ++;
+    Scheduler.Task_Running_Index = Scheduler.Task_Running_Index % MAX_OS_TASK;
 
     __asm volatile("bl Scheduler_Get_Current_PSP");
     __asm volatile("LDMIA R0!, {R4-R11}");

@@ -8,6 +8,7 @@
 "./Core/Startup/startup_stm32f411retx.o"
 "./Drivers/OS/OS_Task/OS_Task.o"
 "./Drivers/OS/Scheduler/OS_Scheduler.o"
+"./Drivers/OS/Scheduler/OS_Task_API.o"
 "./Drivers/OS/Scheduler/OS_Task_Function_Handler.o"
 "./Drivers/OS/Scheduler/OS_Task_Infomation.o"
 "./Drivers/OS/Scheduler/Scheduler.o"
