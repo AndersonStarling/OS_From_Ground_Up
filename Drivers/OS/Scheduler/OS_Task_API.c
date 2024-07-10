@@ -82,7 +82,7 @@ void OS_Init_Multiple_Task(void)
     uint32_t Task_Index = 0;
 
     /* Init all task */
-    for(Task_Index = 0; Index < OS_MAX_TASK; Index ++)
+    for(Task_Index = 0; Task_Index < OS_MAX_TASK; Task_Index ++)
     {
         OS_Init_Single_Task(&OS_Task[Task_Index]);
     }
