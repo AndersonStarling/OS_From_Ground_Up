@@ -23,7 +23,6 @@
 /* USER CODE BEGIN Includes */
 #include "OS_Task.h"
 #include "System_Timer.h"
-#include "Scheduler.h"
 
 /* USER CODE END Includes */
 
