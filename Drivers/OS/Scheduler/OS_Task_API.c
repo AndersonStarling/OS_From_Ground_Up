@@ -1,7 +1,8 @@
 #include <stdint.h>
+#include <stdbool.h>
+#include "OS_Task_Information.h"
 #include "OS_Scheduler.h"
 #include "OS_Task_Function_Handler.h"
-#include "OS_Task_Information.h"
 #include "OS_Task_API.h"
 
 static void OS_Init_Single_Task(OS_Task_Struct_t * OS_Task)

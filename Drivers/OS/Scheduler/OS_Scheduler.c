@@ -1,8 +1,10 @@
 #include <stdint.h>
+#include <stdbool.h>
+#include "OS_Task_Information.h"
 #include "OS_Scheduler.h"
 #include "OS_Task_API.h"
 #include "System_Timer.h"
-#include "OS_Task_Information.h"
+
 
 /* Scheduler data */
 OS_Scheduler_struct_t Scheduler = 
@@ -11,20 +13,34 @@ OS_Scheduler_struct_t Scheduler =
     .OS_Task_Pointer = &OS_Task[0]
 };
 
+static void Scheduler_Init_Ready_List(void)
+{
+    uint32_t Index = 0;
+
+    for(Index = 0; Index < OS_MAX_TASK; Index ++)
+    {
+        if(Scheduler.OS_Task_Pointer[Index].Task_Ready == true)
+        {
+            Scheduler.OS_List_Task_Ready[Index] = Scheduler.OS_Task_Pointer[Index];
+        }
+    }
+}
+
 static uint32_t Scheduler_Get_Current_PSP(void)
 {
-    return Scheduler.OS_Task_Pointer[Scheduler.Task_Running_Index].Current_Stack_Pointer;
+    return Scheduler.OS_List_Task_Ready[Scheduler.Task_Running_Index].Current_Stack_Pointer;
 }
 
 static void Scheduler_Save_Current_PSP(uint32_t Current_PSP)
 {
-    Scheduler.OS_Task_Pointer[Scheduler.Task_Running_Index].Current_Stack_Pointer = Current_PSP;
+    Scheduler.OS_List_Task_Ready[Scheduler.Task_Running_Index].Current_Stack_Pointer = Current_PSP;
 }
 
 void Scheduler_Start_OS(void)
 {
     /* Init OS task */
     OS_Init_Multiple_Task();
+    Scheduler_Init_Ready_List();
 
     /* Init and start system timer */
     System_Timer_Init();
@@ -40,7 +56,7 @@ void Scheduler_Start_OS(void)
     __asm volatile("MSR CONTROL, R0");
 
     /* Call first task */
-    ((void (*)())(((uint32_t *)(Scheduler.OS_Task_Pointer[Scheduler.Task_Running_Index].Current_Stack_Pointer))[PC_INDEX]))();
+    ((void (*)())(((uint32_t *)(Scheduler.OS_List_Task_Ready[0].Current_Stack_Pointer))[PC_INDEX]))();
 
 }
 
