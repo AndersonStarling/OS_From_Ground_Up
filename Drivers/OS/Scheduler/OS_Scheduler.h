@@ -27,6 +27,7 @@ typedef struct
     OS_Task_Struct_t * OS_Task_Pointer;
     uint32_t         Task_Running_Index;
     OS_Task_Struct_t OS_List_Task_Ready[OS_MAX_TASK];
+    OS_Task_Struct_t         Task_Priority[32][OS_MAX_TASK];
 } OS_Scheduler_struct_t;
 
 

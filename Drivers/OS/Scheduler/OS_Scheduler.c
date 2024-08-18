@@ -13,6 +13,42 @@ OS_Scheduler_struct_t Scheduler =
     .OS_Task_Pointer = &OS_Task[0]
 };
 
+static void Scheduler_Insert_Task_Pointer_To_Task_Tabble(OS_Task_Struct_t Task_Insert, uint32_t Task_Position)
+{
+    uint32_t Index = 0;
+
+    for(Index = 32; Index > Task_Position; Index --)
+    {
+        Scheduler.Task_Priority[Index][0] = Scheduler.Task_Priority[Index - 1][0];
+    }
+
+    Scheduler.Task_Priority[Task_Position][0] = Task_Insert;
+}
+
+static void Scheduler_Allocate_Task_Priority(void)
+{
+    uint8_t Max_Priority = 0;
+    uint32_t Index = 0;
+
+    Max_Priority = Scheduler.OS_Task_Pointer[0].Task_Priority;
+    Scheduler.Task_Priority[0][0] = Scheduler.OS_Task_Pointer[0];
+
+    for(Index = 1; Index < OS_MAX_TASK; Index ++)
+    {
+        if(Max_Priority < Scheduler.OS_Task_Pointer[Index].Task_Priority)
+        {
+            /* Alway insert highest task priority to index 0 */
+            Scheduler_Insert_Task_Pointer_To_Task_Tabble(Scheduler.OS_Task_Pointer[Index], 0);
+        }
+        else if(Max_Priority > Scheduler.OS_Task_Pointer[Index].Task_Priority)
+        {
+            Scheduler.Task_Priority[Index][0] = Scheduler.OS_Task_Pointer[Index];
+        }
+
+        Max_Priority = Scheduler.OS_Task_Pointer[Index].Task_Priority;
+    }
+}
+
 static void Scheduler_Init_Ready_List(void)
 {
     uint32_t Index = 0;
@@ -41,6 +77,7 @@ void Scheduler_Start_OS(void)
     /* Init OS task */
     OS_Init_Multiple_Task();
     Scheduler_Init_Ready_List();
+    Scheduler_Allocate_Task_Priority();
 
     /* Init and start system timer */
     System_Timer_Init();
